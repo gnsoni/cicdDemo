@@ -1,4 +1,4 @@
-From nginx:stable-alpine3.23-perl
+FROM nginx:stable-alpine3.23-perl
 COPY ./html/index.html /usr/share/nginx/html/*
-Expose 8181
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
