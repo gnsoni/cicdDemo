@@ -40,10 +40,13 @@ jobs:
 
     - name: Build and push Docker image
       id: push
-      uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+      uses: docker/build-push-action@v6
       with:
         context: .
         push: true
+        provenance: false         # <-- IMPORTANT: disables OCI-style provenance
+        sbom: false               # (optional) avoids extra OCI artifacts
+        #annotations: {}           # (optional) avoid OCI artifact metadata
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
