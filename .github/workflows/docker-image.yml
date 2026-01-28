@@ -12,7 +12,15 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - platform: linux/amd64
+          runner: ubuntu-latest
+        - platform: linux/arm64
+          runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
 
     permissions:
       contents: read
@@ -42,7 +50,6 @@ jobs:
       id: push
       uses: docker/build-push-action@v6
       with:
-        platforms: linux/amd64,linux/arm64
         context: .
         push: true
         provenance: false         # <-- IMPORTANT: disables OCI-style provenance
